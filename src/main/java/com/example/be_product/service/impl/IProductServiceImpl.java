@@ -6,6 +6,8 @@ import com.example.be_product.repository.ICategoryRepository;
 import com.example.be_product.repository.IProductRepository;
 import com.example.be_product.service.my_interface.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,5 +41,10 @@ public class IProductServiceImpl implements IProductService {
     @Override
     public List<Category> showAllCategory() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public Page<Product> showAllProductByPage(Pageable pageable) {
+        return productRepository.pageShowAllProduct(pageable);
     }
 }

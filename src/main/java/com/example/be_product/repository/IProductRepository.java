@@ -1,6 +1,8 @@
 package com.example.be_product.repository;
 
 import com.example.be_product.model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,7 +25,9 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
     @Query(value = "update Product  p set p.status = false where p.id = :id")
     void removeProductById(@Param("id")Long id);
 
-
+//    Hiển thị tất cả sản phẩm phân trang
+    @Query(value = "select p from Product  p where p.status = true ")
+    Page<Product> pageShowAllProduct(Pageable pageable);
 }
 
 
