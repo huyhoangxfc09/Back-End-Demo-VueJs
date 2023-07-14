@@ -5,12 +5,12 @@ import com.example.be_product.model.Product;
 import com.example.be_product.service.my_interface.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @RestController
@@ -73,6 +73,16 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }else {
             return new ResponseEntity<>(categories,HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/pages")
+    public ResponseEntity<Page<Product>> pageShowProduct(@PageableDefault(size = 3)Pageable pageable){
+        Page<Product> pageProduct = productService.showAllProductByPage(pageable);
+        if (pageProduct.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(pageProduct,HttpStatus.OK);
         }
     }
 
